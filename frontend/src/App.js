@@ -1,26 +1,36 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
+import { fetchAnimals } from './actions'
 
-const App = () => {
+const App = ({ animals, fetchAnimals }) => {
 
-  const [animals, setAnimals] = useState(null)
-  const [pagination, setPagination] = useState(null)
+  const { items, loading, error, pagination } = animals
 
   useEffect(() => {
-    axios.get('/api/animals/search')
-      .then(res => {
-        setAnimals([...res.data.animals])
-        setPagination({...res.data.pagination})
-      })
-  }, [animals])
+    fetchAnimals()
+  }, [])
 
-  return (
-    <div>
-      {animals && animals.map(x => {
-        return <a key={x.id} href={x.url} target="blank" rel="noopener">{x.name} ({x.species})</a>
-      })}
-    </div>
-  );
+  if (loading) {
+    return <h1>Loading...</h1>
+  } else if (error) {
+    return <h1>{error}</h1>
+  } else if (items) {
+    return (
+      <div>
+        {items && items.map(x => {
+          return <a key={x.id} href={x.url} target="blank" rel="noopener">{x.name} ({x.species})</a>
+        })}
+      </div>
+    )
+  }
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  animals: state.animals
+})
+
+const mapDispatchToProps = {
+  fetchAnimals
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
