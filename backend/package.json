@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node index.js"
+    "server": "nodemon --exec babel-node index.js",
+    "client": "npm start --prefix ../frontend",
+    "start": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
   "author": "",
@@ -17,6 +19,7 @@
   "dependencies": {
     "@petfinder/petfinder-js": "^1.0.5",
     "axios": "^0.19.0",
+    "concurrently": "^4.1.1",
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
     "express": "^4.17.1"
