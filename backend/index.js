@@ -26,6 +26,30 @@ app.get('/api/auth', (req, res) => {
 })
 
 
+
+/**********************************/
+/*** ANIMALS */
+
+// get list of animals + search queries
+app.get('/api/animals/search', (req, res) => {
+  client.animal.search({ ...req.query })
+    .then(response => {
+      res.json({ ...response.data })
+    })
+    .catch(err => console.log(err))
+})
+
+// get specific animal with ID
+app.get('/api/animals/:id', (req, res) => {
+  client.animal.show(req.params.id)
+    .then(response => {
+      res.json({ ...response.data })
+    })
+    .catch(err => console.log(err))
+})
+
+
+
 /**********************************/
 /*** BY TYPE */
 
@@ -54,28 +78,6 @@ app.get('/api/types/:type', (req, res) => {
 // get all breeds of specific type of animal
 app.get('/api/breeds/:breed', (req, res) => {
   client.animalData.breeds(req.params.breed)
-    .then(response => {
-      res.json({ ...response.data })
-    })
-    .catch(err => console.log(err))
-})
-
-
-/**********************************/
-/*** ANIMALS */
-
-// get list of animals + search queries
-app.get('/api/animals/search', (req, res) => {
-  client.animal.search({ ...req.query })
-    .then(response => {
-      res.json({ ...response.data })
-    })
-    .catch(err => console.log(err))
-})
-
-// get specific animal with ID
-app.get('/api/animals/:id', (req, res) => {
-  client.animal.show(req.params.id)
     .then(response => {
       res.json({ ...response.data })
     })
