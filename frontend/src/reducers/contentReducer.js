@@ -12,9 +12,9 @@ const initialState = {
   error: null,
   type: null,
   breeds: null,
-  gender: ['any', 'male', 'female'],
-  age: ['any', 'baby', 'young', 'adult', 'senior'],
-  size: ['any', 'small', 'medium', 'large', 'xlarge'],
+  genders: ['any', 'male', 'female'],
+  ages: ['any', 'baby', 'young', 'adult', 'senior'],
+  sizes: ['any', 'small', 'medium', 'large', 'xlarge'],
   where: '',
 }
 
