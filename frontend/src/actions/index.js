@@ -5,13 +5,41 @@ import {
   FETCH_ANIMALS_ERROR,
   FETCH_BREEDS_BEGIN,
   FETCH_BREEDS_SUCCESS,
-  FETCH_BREEDS_ERROR
+  FETCH_BREEDS_ERROR,
+  FETCH_TYPE_BEGIN,
+  FETCH_TYPE_SUCCESS,
+  FETCH_TYPE_ERROR
 } from './types'
 
 
 
-// FETCH BREEDS
+// SET TYPE
+export const fetchTypeBegin = () => ({
+  type: FETCH_TYPE_BEGIN
+})
 
+export const fetchTypeSuccess = (data) => ({
+  type: FETCH_TYPE_SUCCESS,
+  payload: data
+})
+
+export const fetchTypeError = (message) => ({
+  type: FETCH_TYPE_ERROR,
+  payload: message
+})
+
+export const fetchType = (type) => {
+  return (dispatch) => {
+    dispatch(fetchTypeBegin())
+    return axios.get(`/api/types/${type}`)
+      .then(res => dispatch(fetchTypeSuccess(res.data.type)))
+      .catch(err => dispatch(fetchTypeError(err.message)))
+  }
+}
+
+
+
+// FETCH BREEDS
 export const fetchBreedsBegin = () => ({
   type: FETCH_BREEDS_BEGIN
 })
@@ -30,7 +58,7 @@ export const fetchBreeds = (animal) => {
   return (dispatch) => {
     dispatch(fetchBreedsBegin())
     return axios.get(`/api/breeds/${animal}`)
-      .then(res => dispatch(fetchBreedsSuccess(res.data)))
+      .then(res => dispatch(fetchBreedsSuccess(res.data.breeds)))
       .catch(err => dispatch(fetchBreedsError(err.message)))
   }
 }
