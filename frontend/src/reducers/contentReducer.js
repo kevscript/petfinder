@@ -11,10 +11,10 @@ const initialState = {
   loading: true,
   error: null,
   type: null,
-  breeds: null,
-  genders: ['any', 'male', 'female'],
-  ages: ['any', 'baby', 'young', 'adult', 'senior'],
-  sizes: ['any', 'small', 'medium', 'large', 'xlarge'],
+  breeds: [{name: 'Any'}],
+  genders: ['Any', 'Male', 'Female'],
+  ages: ['Any', 'Baby', 'Young', 'Adult', 'Senior'],
+  sizes: ['Any', 'Small', 'Medium', 'Large', 'XLarge'],
   where: '',
 }
 
@@ -50,7 +50,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        breeds: [...action.payload]
+        breeds: [...initialState.breeds, ...action.payload]
       }
     
     case FETCH_BREEDS_ERROR:
