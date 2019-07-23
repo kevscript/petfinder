@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { fetchType, fetchBreeds } from '../actions'
 
 import DogIcon from '../assets/dog.svg'
 import CatIcon from '../assets/cat.svg'
@@ -13,7 +15,6 @@ const Container = styled.div`
 `
 
 const DogContainer = styled.div`
-  cursor: pointer;
   position: relative;
   width: 50%;
   height: 100%;
@@ -27,20 +28,43 @@ const CatContainer = styled(DogContainer)`
   background: ${props => props.theme.colors.secondary};
 `
 
+const IconContainer = styled(Link)`
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.5s ease-in-out;
+
+  &:hover {
+    transform: scale(1.5)
+  }
+`
+
 const Icon = styled.img`
   display: block;
-  width: 30%;
+  width: 100%;
   height: auto;
 `
 
-const ChoicePage = ({ content }) => {
+const ChoicePage = ({ fetchType, fetchBreeds }) => {
+
+  const handleClick = (e) => {
+    const type = e.currentTarget.type
+    fetchType(type)
+    fetchBreeds(type)
+  }
+
   return (
     <Container>
-      <DogContainer type="dog">
-        <Icon src={DogIcon} />
+      <DogContainer>
+        <IconContainer to="/form" type="dog" onClick={handleClick}>
+          <Icon src={DogIcon} />
+        </IconContainer>
       </DogContainer>
-      <CatContainer type="cat">
-        <Icon src={CatIcon} />
+      <CatContainer>
+        <IconContainer to="/form" type="cat" onClick={handleClick}>
+          <Icon src={CatIcon} />
+        </IconContainer>
       </CatContainer>
     </Container>
   )
@@ -50,4 +74,9 @@ const mapStateToProps = (state) => ({
   content: state.content
 })
 
-export default connect(mapStateToProps, null)(ChoicePage)
+const mapDispatchToProps = {
+  fetchType,
+  fetchBreeds
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChoicePage)
