@@ -16,7 +16,7 @@ const MyForm = ({content}) => {
   } else {
     return (
       <div>
-        <h1>Looking for a {type}</h1>
+        <h1>Looking for a {type.name}</h1>
         <form>
           <div>
             <label htmlFor="breed">Breed</label>
