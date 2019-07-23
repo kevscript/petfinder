@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom'
 import GlobalStyle from '../styles/GlobalStyle'
 
 import ChoicePage from './ChoicePage'
+import FormPage from './FormPage'
 
 const App = () => {
   return (
@@ -10,6 +11,7 @@ const App = () => {
       <GlobalStyle />
 
       <Route path="/" exact component={ChoicePage} />
+      <Route path="/form" exact component={FormPage} />
     </div>
   )
 }
