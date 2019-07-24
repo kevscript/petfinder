@@ -1,19 +1,44 @@
 import axios from 'axios'
 import { 
-  FETCH_ANIMALS_BEGIN,
-  FETCH_ANIMALS_SUCCESS,
-  FETCH_ANIMALS_ERROR,
   FETCH_BREEDS_BEGIN,
   FETCH_BREEDS_SUCCESS,
   FETCH_BREEDS_ERROR,
   FETCH_TYPE_BEGIN,
   FETCH_TYPE_SUCCESS,
-  FETCH_TYPE_ERROR
+  FETCH_TYPE_ERROR,
+  FETCH_ANIMALS_BEGIN,
+  FETCH_ANIMALS_SUCCESS,
+  FETCH_ANIMALS_ERROR,
 } from './types'
 
 
+// FETCH ANIMAL
+export const fetchAnimalsBegin = () => ({
+  type: FETCH_ANIMALS_BEGIN
+})
 
-// SET TYPE
+export const fetchAnimalsSuccess = (data) => ({
+  type: FETCH_ANIMALS_SUCCESS,
+  payload: data
+})
+
+export const fetchAnimalsError = (message) => ({
+  type: FETCH_ANIMALS_ERROR,
+  payload: message
+})
+
+export const fetchAnimal = (query) => {
+  return (dispatch) => {
+    dispatch(fetchAnimalsBegin())
+    return axios.get('/api/animals/search', query)
+      .then(res => dispatch(fetchAnimalsSuccess(res.data)))
+      .catch(err => dispatch(fetchAnimalsError(err.message)))
+  }
+}
+
+
+
+// FETCH TYPE
 export const fetchTypeBegin = () => ({
   type: FETCH_TYPE_BEGIN
 })
@@ -60,32 +85,5 @@ export const fetchBreeds = (animal) => {
     return axios.get(`/api/breeds/${animal}`)
       .then(res => dispatch(fetchBreedsSuccess(res.data.breeds)))
       .catch(err => dispatch(fetchBreedsError(err.message)))
-  }
-}
-
-
-
-
-
-export const fetchAnimalsBegin = () => ({
-  type: FETCH_ANIMALS_BEGIN
-})
-
-export const fetchAnimalsSuccess = (data) => ({
-  type: FETCH_ANIMALS_SUCCESS,
-  payload: data
-})
-
-export const fetchAnimalsError = (message) => ({
-  type: FETCH_ANIMALS_ERROR,
-  payload: message
-})
-
-export const fetchAnimals = () => {
-  return (dispatch) => {
-    dispatch(fetchAnimalsBegin())
-    return axios.get('/api/animals/search')
-      .then(res => dispatch(fetchAnimalsSuccess(res.data)))
-      .catch(err => dispatch(fetchAnimalsError(err.message)))
   }
 }
