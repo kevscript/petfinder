@@ -1,20 +1,24 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import SearchForm from '../components/SearchForm'
+import FormikForm from '../components/FormikForm'
 
-const FormPage = () => {
-  return (
-    <div>
-      <SearchForm />
-    </div>
-  )
+const FormPage = ({ content }) => {
+
+  const { loading, error } = content
+
+  if (loading) {
+    return  <h1>loading...</h1>
+  } else if (error) {
+    return <h1>{error}</h1>
+  } else {
+    return <FormikForm content={content}/>
+  }
 }
 
 const mapStateToProps = (state) => ({
   content: state.content
 })
 
-const mapDispatchToProps = {}
 
-export default connect(mapStateToProps, mapDispatchToProps)(FormPage)
+export default connect(mapStateToProps, null)(FormPage)
