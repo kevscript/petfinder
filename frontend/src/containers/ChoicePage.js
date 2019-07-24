@@ -33,7 +33,7 @@ const IconContainer = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.3s ease-in-out;
 
   &:hover {
     transform: scale(1.5)
@@ -70,13 +70,9 @@ const ChoicePage = ({ fetchType, fetchBreeds }) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  content: state.content
-})
-
 const mapDispatchToProps = {
   fetchType,
   fetchBreeds
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChoicePage)
+export default connect(null, mapDispatchToProps)(ChoicePage)
