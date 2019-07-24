@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import { withFormik, Field } from 'formik'
-import { connect } from 'react-redux'
-import { fetchAnimal } from '../actions'
 
 const MyForm = (props) => {
   const [open, setOpen] = useState(false)
@@ -57,6 +55,7 @@ const MyForm = (props) => {
               <label htmlFor="coats">Coat</label>
               {errors.coat && touched.coat && <div id="feedback">{errors.coat}</div>}
               <Field component="select" id="coats" onChange={handleChange} onBlur={handleBlur} name="coat" value={values.coat}>
+                <option key='any-coat' value='Any'>Any</option>
                 {type.coats && type.coats.map(x => <option key={x} value={x}>{x}</option>)}
               </Field>
             </div>
@@ -64,6 +63,7 @@ const MyForm = (props) => {
               <label htmlFor="colors">Color</label>
               {errors.color && touched.color && <div id="feedback">{errors.color}</div>}
               <Field component="select" id="colors" onChange={handleChange} onBlur={handleBlur} name="color" value={values.color}>
+                <option key='any-color' value='Any'>Any</option>
                 {type.colors && type.colors.map(x => <option key={x} value={x}>{x}</option>)}
               </Field>
             </div>
@@ -89,23 +89,26 @@ const FormikForm = withFormik({
   }),
 
   handleSubmit: (values, { props }) => {
+    // copied all values into another object to avoid manipulating values directly
     let copiedValues = {...values}
+
+    // created an object thats gonna represent the object of queries passed to the api
+    // added type of animal to all queries
     let selectedValues = {
       type: props.content.type.name
     }
 
+    // loops through the object of values
+    // if a key has a truthy value, pass it to the query object
     for (let [key, value] of Object.entries(copiedValues)) {
-      if (value) {
+      if (value && value !== 'Any') {
         selectedValues[key] = value
       }
     }
 
-    props.fetchAnimal(selectedValues)
+    // fetches animals based on the object of queries
+    props.handleAnimals(selectedValues)
   }
 })(MyForm)
 
-const mapDispatchToProps = {
-  fetchAnimal
-}
-
-export default connect(null, mapDispatchToProps)(FormikForm)
+export default FormikForm
