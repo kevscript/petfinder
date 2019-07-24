@@ -27,10 +27,10 @@ export const fetchAnimalsError = (message) => ({
   payload: message
 })
 
-export const fetchAnimal = (query) => {
+export const fetchAnimals = (query) => {
   return (dispatch) => {
     dispatch(fetchAnimalsBegin())
-    return axios.get('/api/animals/search', query)
+    return axios.get('/api/animals/search', { params: {...query}})
       .then(res => dispatch(fetchAnimalsSuccess(res.data)))
       .catch(err => dispatch(fetchAnimalsError(err.message)))
   }
