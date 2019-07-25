@@ -1,12 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { fetchAnimals, setValues } from '../actions'
 
 import AnimalsList from '../components/AnimalsList'
 import Pagination from '../components/Pagination'
 
-const ListPage = ({ animals }) => {
+const ListPage = ({ animals, fetchAnimals, setValues }) => {
 
-  const { loading, error, data, pagination } = animals
+  const { loading, error, data, pagination, values } = animals
+
+  const handlePagination = (page) => {
+    const newPage = { page: page }
+    setValues(newPage)
+    fetchAnimals({...values, ...newPage})
+  }
 
   if (loading) {
     return  <h1>loading...</h1>
@@ -15,10 +22,9 @@ const ListPage = ({ animals }) => {
   } else {
     return (
       <div>
-        ListPage
-        <Pagination pagination={pagination} />
-        <AnimalsList data={data} />
-        <Pagination pagination={pagination} />
+        <Pagination pagination={pagination} handlePagination={handlePagination} />
+          <AnimalsList data={data} />
+        <Pagination pagination={pagination} handlePagination={handlePagination} />
       </div>
     )
   }
@@ -28,6 +34,9 @@ const mapStateToProps = (state) => ({
   animals: state.animals
 })
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  fetchAnimals,
+  setValues
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListPage)
