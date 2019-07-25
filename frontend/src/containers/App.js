@@ -4,6 +4,7 @@ import GlobalStyle from '../styles/GlobalStyle'
 
 import ChoicePage from './ChoicePage'
 import FormPage from './FormPage'
+import ListPage from './ListPage'
 
 const App = () => {
   return (
@@ -11,7 +12,8 @@ const App = () => {
       <GlobalStyle />
 
       <Route path="/" exact component={ChoicePage} />
-      <Route path="/form" exact component={FormPage} />
+      <Route path="/form" component={FormPage} />
+      <Route path="/list" component={ListPage} />
     </div>
   )
 }
