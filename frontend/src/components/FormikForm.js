@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { withRouter } from 'react-router-dom'
 import { withFormik, Field } from 'formik'
 
 const MyForm = (props) => {
@@ -32,7 +33,7 @@ const MyForm = (props) => {
           <label htmlFor="ages">Age</label>
           {errors.age && touched.age && <div id="feedback">{errors.age}</div>}
           <Field component="select" id="ages" onChange={handleChange} onBlur={handleBlur} name="age" value={values.age}>
-            {ages && ages.map(x => <option key={x} value={x}>{x}</option> )}
+            {ages && ages.map(x => <option key={x} value={x}>{x}</option>)}
           </Field>
         </div>
         <div>
@@ -69,7 +70,6 @@ const MyForm = (props) => {
             </div>
           </>
         }
-
         <button type="submit">Submit</button>
       </form>
     </div>
@@ -90,7 +90,7 @@ const FormikForm = withFormik({
 
   handleSubmit: (values, { props }) => {
     // copied all values into another object to avoid manipulating values directly
-    let copiedValues = {...values}
+    let copiedValues = { ...values }
 
     // created an object thats gonna represent the object of queries passed to the api
     // added type of animal to all queries
@@ -108,7 +108,8 @@ const FormikForm = withFormik({
 
     // fetches animals based on the object of queries
     props.handleAnimals(selectedValues)
+    props.history.push('/list');
   }
 })(MyForm)
 
-export default FormikForm
+export default withRouter(FormikForm)
