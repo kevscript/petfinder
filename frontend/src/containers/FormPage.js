@@ -1,14 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { fetchAnimals } from '../actions'
+import { fetchAnimals, setValues } from '../actions'
 
 import FormikForm from '../components/FormikForm'
 
-const FormPage = ({ content, fetchAnimals }) => {
+const FormPage = ({ content, fetchAnimals, setValues }) => {
 
   const { loading, error } = content
 
-  const handleAnimals = (query) => {
+  const handleFormSubmit = (query) => {
+    setValues(query)
     fetchAnimals(query)
   }
 
@@ -17,7 +18,7 @@ const FormPage = ({ content, fetchAnimals }) => {
   } else if (error) {
     return <h1>{error}</h1>
   } else {
-    return <FormikForm content={content} handleAnimals={handleAnimals} />
+    return <FormikForm content={content} handleFormSubmit={handleFormSubmit} />
   }
 }
 
@@ -26,7 +27,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  fetchAnimals
+  fetchAnimals,
+  setValues
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormPage)

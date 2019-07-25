@@ -95,7 +95,8 @@ const FormikForm = withFormik({
     // created an object thats gonna represent the object of queries passed to the api
     // added type of animal to all queries
     let selectedValues = {
-      type: props.content.type.name
+      type: props.content.type.name,
+      page: 1
     }
 
     // loops through the object of values
@@ -107,7 +108,7 @@ const FormikForm = withFormik({
     }
 
     // fetches animals based on the object of queries
-    props.handleAnimals(selectedValues)
+    props.handleFormSubmit(selectedValues)
     props.history.push('/list');
   }
 })(MyForm)
