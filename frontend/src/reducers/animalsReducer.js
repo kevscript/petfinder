@@ -2,9 +2,11 @@ import {
   FETCH_ANIMALS_BEGIN,
   FETCH_ANIMALS_SUCCESS,
   FETCH_ANIMALS_ERROR,
+  SET_VALUES
 } from '../actions/types'
 
 const initialState = {
+  values: null,
   loading: true,
   error: null,
   data: null,
@@ -13,6 +15,13 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch(action.type) {
+
+    case SET_VALUES:
+      return {
+        ...state,
+        values: {...state.values, ...action.payload}
+      }
+
     case FETCH_ANIMALS_BEGIN:
       return {
         ...state,

@@ -9,8 +9,15 @@ import {
   FETCH_ANIMALS_BEGIN,
   FETCH_ANIMALS_SUCCESS,
   FETCH_ANIMALS_ERROR,
+  SET_VALUES
 } from './types'
 
+
+// SET VALUES
+export const setValues = (values) => ({
+  type: SET_VALUES,
+  payload: values
+})
 
 // FETCH ANIMAL
 export const fetchAnimalsBegin = () => ({
@@ -36,8 +43,6 @@ export const fetchAnimals = (query) => {
   }
 }
 
-
-
 // FETCH TYPE
 export const fetchTypeBegin = () => ({
   type: FETCH_TYPE_BEGIN
@@ -61,8 +66,6 @@ export const fetchType = (type) => {
       .catch(err => dispatch(fetchTypeError(err.message)))
   }
 }
-
-
 
 // FETCH BREEDS
 export const fetchBreedsBegin = () => ({
