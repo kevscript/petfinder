@@ -3,9 +3,10 @@ import {
   FETCH_BREEDS_BEGIN,
   FETCH_BREEDS_SUCCESS,
   FETCH_BREEDS_ERROR,
-  FETCH_TYPE_BEGIN,
-  FETCH_TYPE_SUCCESS,
-  FETCH_TYPE_ERROR,
+  FETCH_TYPES_BEGIN,
+  FETCH_TYPES_SUCCESS,
+  FETCH_TYPES_ERROR,
+  SET_SELECTED_TYPE,
   FETCH_ANIMALS_BEGIN,
   FETCH_ANIMALS_SUCCESS,
   FETCH_ANIMALS_ERROR,
@@ -44,28 +45,40 @@ export const fetchAnimals = (query) => {
 }
 
 // FETCH TYPE
-export const fetchTypeBegin = () => ({
-  type: FETCH_TYPE_BEGIN
+export const fetchTypesBegin = () => ({
+  type: FETCH_TYPES_BEGIN
 })
 
-export const fetchTypeSuccess = (data) => ({
-  type: FETCH_TYPE_SUCCESS,
-  payload: data
+export const fetchTypesSuccess = (dog, cat) => ({
+  type: FETCH_TYPES_SUCCESS,
+  payload: [
+    dog.data.type,
+    cat.data.type
+  ]
 })
 
-export const fetchTypeError = (message) => ({
-  type: FETCH_TYPE_ERROR,
+export const fetchTypesError = (message) => ({
+  type: FETCH_TYPES_ERROR,
   payload: message
 })
 
-export const fetchType = (type) => {
-  return (dispatch) => {
-    dispatch(fetchTypeBegin())
-    return axios.get(`/api/types/${type}`)
-      .then(res => dispatch(fetchTypeSuccess(res.data.type)))
-      .catch(err => dispatch(fetchTypeError(err.message)))
+export const fetchTypes = () => {
+  return async (dispatch) => {
+    dispatch(fetchTypesBegin())
+
+    const dogPromise = await axios.get(`/api/types/dog`)
+    const catPromise = await axios.get(`/api/types/cat`)
+    await Promise.all([dogPromise, catPromise])
+      .then(([dog, cat]) => dispatch(fetchTypesSuccess(dog, cat)))
+      .catch(err => dispatch(fetchTypesError(err.message)))
   }
 }
+
+// SET SELECTED TYPE 
+export const setSelectedType = (type) => ({
+  type: SET_SELECTED_TYPE,
+  payload: type
+})
 
 // FETCH BREEDS
 export const fetchBreedsBegin = () => ({

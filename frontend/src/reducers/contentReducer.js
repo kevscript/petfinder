@@ -2,16 +2,18 @@ import {
   FETCH_BREEDS_BEGIN,
   FETCH_BREEDS_SUCCESS,
   FETCH_BREEDS_ERROR,
-  FETCH_TYPE_BEGIN,
-  FETCH_TYPE_SUCCESS,
-  FETCH_TYPE_ERROR
+  FETCH_TYPES_BEGIN,
+  FETCH_TYPES_SUCCESS,
+  FETCH_TYPES_ERROR,
+  SET_SELECTED_TYPE
 } from '../actions/types'
 
 const initialState = {
   loading: true,
   error: null,
-  type: null,
-  breeds: [{name: 'Any'}],
+  types: null,
+  selected: null,
+  breeds: [{ name: 'Any' }],
   genders: ['Any', 'Male', 'Female'],
   ages: ['Any', 'Baby', 'Young', 'Adult', 'Senior'],
   sizes: ['Any', 'Small', 'Medium', 'Large', 'XLarge'],
@@ -19,21 +21,28 @@ const initialState = {
 }
 
 export default (state = initialState, action) => {
-  switch(action.type) {
-    case FETCH_TYPE_BEGIN:
+  switch (action.type) {
+    case SET_SELECTED_TYPE:
+      const selectedType = state.types.find(type => type.name.toLowerCase() === action.payload.toLowerCase())
+      return {
+        ...state,
+        selected: {...selectedType}
+      }
+
+    case FETCH_TYPES_BEGIN:
       return {
         ...state,
         loading: true
       }
 
-    case FETCH_TYPE_SUCCESS:
+    case FETCH_TYPES_SUCCESS:
       return {
         ...state,
         loading: false,
-        type: action.payload
+        types: [...action.payload]
       }
 
-    case FETCH_TYPE_ERROR:
+    case FETCH_TYPES_ERROR:
       return {
         ...state,
         loading: false,
@@ -52,14 +61,14 @@ export default (state = initialState, action) => {
         loading: false,
         breeds: [...initialState.breeds, ...action.payload]
       }
-    
+
     case FETCH_BREEDS_ERROR:
       return {
         ...state,
         loading: false,
         error: action.payload
       }
-    
+
     default:
       return state
   }
