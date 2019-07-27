@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Route } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { fetchTypes } from '../actions'
 import GlobalStyle from '../styles/GlobalStyle'
 
 import ChoicePage from './ChoicePage'
@@ -7,7 +9,12 @@ import FormPage from './FormPage'
 import ListPage from './ListPage'
 import Header from '../components/Header'
 
-const App = () => {
+const App = ({ fetchTypes }) => {
+
+  useEffect(() => {
+    fetchTypes()
+  }, [])
+
   return (
     <div>
       <GlobalStyle />
@@ -19,4 +26,8 @@ const App = () => {
   )
 }
 
-export default App
+const mapDispatchToProps = {
+  fetchTypes
+}
+
+export default connect(null, mapDispatchToProps)(App)

@@ -4,7 +4,7 @@ import { withFormik, Field } from 'formik'
 
 const MyForm = (props) => {
   const [open, setOpen] = useState(false)
-  const { type, breeds, genders, ages, sizes } = props.content
+  const { breeds, genders, ages, sizes, selected } = props.content
   const { values, touched, errors, handleChange, handleBlur, handleSubmit } = props
 
   const handleOptions = (e) => {
@@ -57,7 +57,7 @@ const MyForm = (props) => {
               {errors.coat && touched.coat && <div id="feedback">{errors.coat}</div>}
               <Field component="select" id="coats" onChange={handleChange} onBlur={handleBlur} name="coat" value={values.coat}>
                 <option key='any-coat' value='Any'>Any</option>
-                {type.coats && type.coats.map(x => <option key={x} value={x}>{x}</option>)}
+                {selected.coats && selected.coats.map(x => <option key={x} value={x}>{x}</option>)}
               </Field>
             </div>
             <div>
@@ -65,7 +65,7 @@ const MyForm = (props) => {
               {errors.color && touched.color && <div id="feedback">{errors.color}</div>}
               <Field component="select" id="colors" onChange={handleChange} onBlur={handleBlur} name="color" value={values.color}>
                 <option key='any-color' value='Any'>Any</option>
-                {type.colors && type.colors.map(x => <option key={x} value={x}>{x}</option>)}
+                {selected.colors && selected.colors.map(x => <option key={x} value={x}>{x}</option>)}
               </Field>
             </div>
           </>
@@ -95,7 +95,7 @@ const FormikForm = withFormik({
     // created an object thats gonna represent the object of queries passed to the api
     // added type of animal to all queries
     let selectedValues = {
-      type: props.content.type.name,
+      type: props.content.selected.name,
       page: 1
     }
 

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { fetchType, fetchBreeds } from '../actions'
+import { fetchBreeds, setSelectedType } from '../actions'
 
 import DogIcon from '../assets/dog.svg'
 import CatIcon from '../assets/cat.svg'
@@ -46,23 +46,23 @@ const Icon = styled.img`
   height: auto;
 `
 
-const ChoicePage = ({ fetchType, fetchBreeds }) => {
+const ChoicePage = ({ fetchBreeds, setSelectedType }) => {
 
   const handleClick = (e) => {
     const type = e.currentTarget.type
-    fetchType(type)
+    setSelectedType(type)
     fetchBreeds(type)
   }
 
   return (
     <Container>
       <DogContainer>
-        <IconContainer to="/form" type="dog" onClick={handleClick}>
+        <IconContainer to="/form" type="Dog" onClick={handleClick}>
           <Icon src={DogIcon} />
         </IconContainer>
       </DogContainer>
       <CatContainer>
-        <IconContainer to="/form" type="cat" onClick={handleClick}>
+        <IconContainer to="/form" type="Cat" onClick={handleClick}>
           <Icon src={CatIcon} />
         </IconContainer>
       </CatContainer>
@@ -71,8 +71,8 @@ const ChoicePage = ({ fetchType, fetchBreeds }) => {
 }
 
 const mapDispatchToProps = {
-  fetchType,
-  fetchBreeds
+  fetchBreeds,
+  setSelectedType
 }
 
 export default connect(null, mapDispatchToProps)(ChoicePage)
