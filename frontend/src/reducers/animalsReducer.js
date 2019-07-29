@@ -2,11 +2,20 @@ import {
   FETCH_ANIMALS_BEGIN,
   FETCH_ANIMALS_SUCCESS,
   FETCH_ANIMALS_ERROR,
-  SET_VALUES
+  SET_VALUE,
+  RESET_VALUES
 } from '../actions/types'
 
 const initialState = {
-  values: null,
+  values: {
+    breed: 'Any',
+    gender: 'Any',
+    age: 'Any',
+    size: 'Any',
+    coat: 'Any',
+    color: 'Any',
+    page: 1
+  },
   loading: true,
   error: null,
   data: null,
@@ -14,12 +23,20 @@ const initialState = {
 }
 
 export default (state = initialState, action) => {
-  switch(action.type) {
-
-    case SET_VALUES:
+  switch (action.type) {
+    case RESET_VALUES:
       return {
         ...state,
-        values: {...state.values, ...action.payload}
+        values: { ...initialState.values }
+      }
+
+    case SET_VALUE:
+      return {
+        ...state,
+        values: {
+          ...state.values,
+          ...action.payload
+        }
       }
 
     case FETCH_ANIMALS_BEGIN:
@@ -27,7 +44,7 @@ export default (state = initialState, action) => {
         ...state,
         loading: true
       }
-    
+
     case FETCH_ANIMALS_ERROR:
       return {
         ...state,

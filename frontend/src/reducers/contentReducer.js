@@ -23,7 +23,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_SELECTED_TYPE:
-      const selectedType = state.types.find(type => type.name.toLowerCase() === action.payload.toLowerCase())
+      const selectedType = state.types.find(type => type.name === action.payload)
       return {
         ...state,
         selected: {...selectedType}
