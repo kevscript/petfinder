@@ -73,7 +73,7 @@ const MyForm = (props) => {
         <button type="submit">Submit</button>
       </form>
     </div>
-  )
+  ) 
 }
 
 const FormikForm = withFormik({
