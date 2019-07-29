@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { 
+import {
   FETCH_BREEDS_BEGIN,
   FETCH_BREEDS_SUCCESS,
   FETCH_BREEDS_ERROR,
@@ -10,14 +10,18 @@ import {
   FETCH_ANIMALS_BEGIN,
   FETCH_ANIMALS_SUCCESS,
   FETCH_ANIMALS_ERROR,
-  SET_VALUES
+  SET_VALUE,
+  RESET_VALUES
 } from './types'
 
+export const resetValues = () => ({
+  type: RESET_VALUES
+})
 
 // SET VALUES
-export const setValues = (values) => ({
-  type: SET_VALUES,
-  payload: values
+export const setValue = (value) => ({
+  type: SET_VALUE,
+  payload: value
 })
 
 // FETCH ANIMAL
@@ -35,10 +39,17 @@ export const fetchAnimalsError = (message) => ({
   payload: message
 })
 
-export const fetchAnimals = (query) => {
-  return (dispatch) => {
+export const fetchAnimals = () => {
+  return (dispatch, getState) => {
     dispatch(fetchAnimalsBegin())
-    return axios.get('/api/animals/search', { params: {...query}})
+    const values = getState().animals.values
+    let selectedValues = {}
+    for (let [key, value] of Object.entries(values)) {
+      if (value && value !== 'Any') {
+        selectedValues[key] = value
+      }
+    }
+    return axios.get('/api/animals/search', { params: { ...selectedValues } })
       .then(res => dispatch(fetchAnimalsSuccess(res.data)))
       .catch(err => dispatch(fetchAnimalsError(err.message)))
   }
@@ -49,12 +60,9 @@ export const fetchTypesBegin = () => ({
   type: FETCH_TYPES_BEGIN
 })
 
-export const fetchTypesSuccess = (dog, cat) => ({
+export const fetchTypesSuccess = (data) => ({
   type: FETCH_TYPES_SUCCESS,
-  payload: [
-    dog.data.type,
-    cat.data.type
-  ]
+  payload: data
 })
 
 export const fetchTypesError = (message) => ({
@@ -65,11 +73,8 @@ export const fetchTypesError = (message) => ({
 export const fetchTypes = () => {
   return async (dispatch) => {
     dispatch(fetchTypesBegin())
-
-    const dogPromise = await axios.get(`/api/types/dog`)
-    const catPromise = await axios.get(`/api/types/cat`)
-    await Promise.all([dogPromise, catPromise])
-      .then(([dog, cat]) => dispatch(fetchTypesSuccess(dog, cat)))
+    await axios.get('/api/types')
+      .then(res => dispatch(fetchTypesSuccess(res.data.types)))
       .catch(err => dispatch(fetchTypesError(err.message)))
   }
 }
