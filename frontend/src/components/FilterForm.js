@@ -3,17 +3,14 @@ import styled from 'styled-components'
 
 const FormContainer = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 90%;
-  margin: 0 auto;
+  justify-content: space-between;
+  align-items: flex-start;
 `
 
 const Form = styled.form`
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  justify-content: space-arround;
-
 `
 
 const Field = styled.div`
@@ -26,18 +23,13 @@ const Field = styled.div`
   }
 `
 
-const FilterForm = ({ content, handleSubmit, handleSelect, values }) => {
+const FilterForm = ({ content, handleSelect, values }) => {
 
   const { breeds, genders, ages, sizes, selected } = content
 
   return (
     <FormContainer>
-      <Form onSubmit={handleSubmit}>
-        {selected &&
-          <Field>
-            <p>{selected.name}</p>
-          </Field>
-        }
+      <Form>
         <Field>
           <label htmlFor="breed">Breed: </label>
           <select name="breed" onChange={handleSelect} value={values.breed}>
@@ -80,7 +72,6 @@ const FilterForm = ({ content, handleSubmit, handleSelect, values }) => {
             </Field>
           </>
         }
-        <button>Search</button>
       </Form>
     </FormContainer>
   )

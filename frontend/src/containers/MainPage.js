@@ -26,13 +26,13 @@ const MainPage = ({ content, animals, setSelectedType, fetchBreeds, fetchAnimals
   const { data, pagination, values, loading } = animals
 
   const handleTypeSelection = (e) => {
-    const type = e.currentTarget.getAttribute('data-type')
+    const type = e.currentTarget.value
     resetValues()
     setSelectedType(type)
     fetchBreeds(type)
   }
 
-  const handleFormSubmission = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     fetchAnimals()
   }
@@ -53,12 +53,12 @@ const MainPage = ({ content, animals, setSelectedType, fetchBreeds, fetchAnimals
 
   return (
     <div>
-      <Header handleClick={handleTypeSelection} />
-      <FilterForm
+      <Header 
+        handleTypeSelection={handleTypeSelection} 
         content={content}
         animals={animals}
-        handleSubmit={handleFormSubmission}
-        handleSelect={handleValueChange}
+        handleSubmit={handleSubmit}
+        handleValuesSelect={handleValueChange}
         values={values}
       />
       <ContentContainer>
