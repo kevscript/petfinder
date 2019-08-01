@@ -17,7 +17,7 @@ const PrimaryButton = styled.button`
   border: 1px solid transparent;
   display: block;
   padding: 8px 20px;
-  border-radius: 15px;
+  border-radius: 2px;
   font-family: 'Source Sans Pro', 'Roboto', sans-serif;
   background: ${props => props.theme.colors.primary};
   color: #fff;
