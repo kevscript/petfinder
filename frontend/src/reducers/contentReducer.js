@@ -39,7 +39,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        types: [...action.payload]
+        types: [...action.payload],
+        selected: {...action.payload[0]}
       }
 
     case FETCH_TYPES_ERROR:

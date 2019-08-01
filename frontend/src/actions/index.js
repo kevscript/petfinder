@@ -44,6 +44,7 @@ export const fetchAnimals = () => {
     dispatch(fetchAnimalsBegin())
     const values = getState().animals.values
     let selectedValues = {}
+    selectedValues['type'] = getState().content.selected.name
     for (let [key, value] of Object.entries(values)) {
       if (value && value !== 'Any') {
         selectedValues[key] = value
@@ -71,10 +72,12 @@ export const fetchTypesError = (message) => ({
 })
 
 export const fetchTypes = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     dispatch(fetchTypesBegin())
     await axios.get('/api/types')
       .then(res => dispatch(fetchTypesSuccess(res.data.types)))
+      .then(() => dispatch(fetchBreeds(getState().content.selected.name)))
+      .then(() => dispatch(fetchAnimals()))
       .catch(err => dispatch(fetchTypesError(err.message)))
   }
 }
