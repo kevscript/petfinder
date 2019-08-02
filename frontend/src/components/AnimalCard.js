@@ -7,7 +7,7 @@ const ImageCard = lazy(() => import('../components/ImageCard'))
 const CardContainer = styled.div`
   cursor: pointer;
   position: relative;
-  max-width: 160px;
+  width: 160px;
   border-radius: 2px;
   display: flex;
   flex-direction: column;
