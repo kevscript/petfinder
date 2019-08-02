@@ -25,7 +25,6 @@ const BottomContainer = styled.div``
 const Header = ({ 
   handleTypeSelection, 
   content, 
-  animals, 
   handleSubmit, 
   handleValuesSelect, 
   values 
@@ -48,7 +47,7 @@ const Header = ({
           </select>
           <button onClick={handleSubmit}>Search</button>
         </div>
-        <button onClick={handleOpen}>More Options</button>
+        <button onClick={handleOpen}>{open ? 'Less Options' : 'More Options'}</button>
       </TopContainer>
       {open &&
         <BottomContainer>

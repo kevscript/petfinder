@@ -9,7 +9,6 @@ const GlobalStyle = createGlobalStyle`
 
   html {
     font-size: 16px;
-    margin-left: calc(100vw - 100%);
   }
 
   body {

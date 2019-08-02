@@ -5,7 +5,6 @@ import { PulseLoader } from 'react-spinners'
 import styled from 'styled-components'
 
 import Header from '../components/Header'
-import FilterForm from '../components/FilterForm'
 import Pagination from '../components/Pagination'
 import AnimalsList from '../components/AnimalsList'
 
@@ -29,6 +28,7 @@ const MainPage = ({ content, animals, setSelectedType, fetchBreeds, fetchAnimals
     const type = e.currentTarget.value
     resetValues()
     setSelectedType(type)
+    fetchAnimals()
     fetchBreeds(type)
   }
 
@@ -56,7 +56,6 @@ const MainPage = ({ content, animals, setSelectedType, fetchBreeds, fetchAnimals
       <Header 
         handleTypeSelection={handleTypeSelection} 
         content={content}
-        animals={animals}
         handleSubmit={handleSubmit}
         handleValuesSelect={handleValueChange}
         values={values}
