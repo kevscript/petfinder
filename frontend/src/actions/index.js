@@ -11,7 +11,10 @@ import {
   FETCH_ANIMALS_SUCCESS,
   FETCH_ANIMALS_ERROR,
   SET_VALUE,
-  RESET_VALUES
+  RESET_VALUES,
+  FETCH_ANIMAL_BEGIN,
+  FETCH_ANIMAL_SUCCESS,
+  FETCH_ANIMAL_ERROR,
 } from './types'
 
 export const resetValues = () => ({
@@ -109,5 +112,29 @@ export const fetchBreeds = (animal) => {
     return axios.get(`/api/breeds/${animal}`)
       .then(res => dispatch(fetchBreedsSuccess(res.data.breeds)))
       .catch(err => dispatch(fetchBreedsError(err.message)))
+  }
+}
+
+// FETCH ANIMAL BY ID
+export const fetchAnimalBegin = () => ({
+  type: FETCH_ANIMAL_BEGIN
+})
+
+export const fetchAnimalSuccess = (data) => ({
+  type: FETCH_ANIMAL_SUCCESS,
+  payload: data
+})
+
+export const fetchAnimalError = (message) => ({
+  type: FETCH_ANIMAL_ERROR,
+  payload: message
+})
+
+export const fetchAnimal = (id) => {
+  return (dispatch) => {
+    dispatch(fetchAnimalBegin())
+    return axios.get(`/api/animals/${id}`)
+      .then(res => dispatch(fetchAnimalSuccess(res.data.animal)))
+      .catch(err => dispatch(fetchAnimalError(err.message)))
   }
 }
