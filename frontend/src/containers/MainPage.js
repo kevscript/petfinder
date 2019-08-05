@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { setSelectedType, fetchBreeds, fetchAnimals, setValue, resetValues } from '../actions'
 import { PulseLoader } from 'react-spinners'
@@ -22,7 +22,12 @@ const LoaderContainer = styled.div`
 
 const MainPage = ({ content, animals, setSelectedType, fetchBreeds, fetchAnimals, setValue, resetValues }) => {
 
+  const [openForm, setOpenForm] = useState(false)
   const { data, pagination, values, loading } = animals
+
+  const handleOpenForm = () => {
+    setOpenForm(!openForm)
+  }
 
   const handleTypeSelection = (e) => {
     const type = e.currentTarget.value
@@ -34,6 +39,7 @@ const MainPage = ({ content, animals, setSelectedType, fetchBreeds, fetchAnimals
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    setOpenForm(false)
     fetchAnimals()
   }
 
@@ -59,6 +65,8 @@ const MainPage = ({ content, animals, setSelectedType, fetchBreeds, fetchAnimals
         handleSubmit={handleSubmit}
         handleValuesSelect={handleValueChange}
         values={values}
+        handleOpenForm={handleOpenForm}
+        openForm={openForm}
       />
       <ContentContainer>
         {loading

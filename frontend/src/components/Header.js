@@ -5,7 +5,7 @@ import FilterForm from './FilterForm'
 
 const HeaderContainer = styled.div`
   width: 100%;
-  padding: 0 5%;
+  padding: 20px 5%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -17,24 +17,22 @@ const TopContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 20px 0;
 `
 
-const BottomContainer = styled.div``
+const BottomContainer = styled.div`
+  margin-top: 20px;
+`
 
 const Header = ({ 
   handleTypeSelection, 
   content, 
   handleSubmit, 
   handleValuesSelect, 
-  values 
+  values,
+  handleOpenForm,
+  openForm
 }) => {
-  const [open, setOpen] = useState(false)
   const { types } = content
-
-  const handleOpen = () => {
-    setOpen(!open)
-  }
 
   return (
     <HeaderContainer>
@@ -47,9 +45,9 @@ const Header = ({
           </select>
           <button onClick={handleSubmit}>Search</button>
         </div>
-        <button onClick={handleOpen}>{open ? 'Less Options' : 'More Options'}</button>
+        <button onClick={handleOpenForm}>{openForm ? 'Less Options' : 'More Options'}</button>
       </TopContainer>
-      {open &&
+      {openForm &&
         <BottomContainer>
           <FilterForm 
             content={content} 
