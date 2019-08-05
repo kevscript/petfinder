@@ -1,10 +1,13 @@
 import React, { lazy, Suspense } from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import Placeholder from '../assets/placeholder.jpg'
 
 const ImageCard = lazy(() => import('../components/ImageCard'))
 
-const CardContainer = styled.div`
+const CardContainer = styled(Link)`
+  text-decoration: none;
+  color: inherit;
   cursor: pointer;
   position: relative;
   width: 160px;
@@ -12,12 +15,13 @@ const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  margin: 20px 0;
+  margin: 20px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 
   &:hover {
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    transform: scale(1.1);
   }
 `
 
@@ -53,7 +57,7 @@ const Detail = styled.p`
 
 const AnimalCard = ({ item }) => {
   return (
-    <CardContainer>
+    <CardContainer to={`/animal/${item.id}`}>
       <ImgContainer>
         <Suspense fallback={<></>}>
           <ImageCard url={item.photos.length > 0 ? item.photos[0].medium : Placeholder} alt="" />

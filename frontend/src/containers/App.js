@@ -5,6 +5,7 @@ import { fetchTypes } from '../actions'
 import GlobalStyle from '../styles/GlobalStyle'
 
 import MainPage from './MainPage'
+import AnimalPage from './AnimalPage'
 
 const App = ({ fetchTypes }) => {
 
@@ -16,6 +17,7 @@ const App = ({ fetchTypes }) => {
     <div>
       <GlobalStyle />
       <Route path="/" exact component={MainPage} />
+      <Route path="/animal/:id" component={AnimalPage} />
     </div>
   )
 }

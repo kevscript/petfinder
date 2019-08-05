@@ -7,7 +7,7 @@ const ListContainer = styled.div`
   width: 90%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
 `
 
 const AnimalsList = ({ data }) => {
