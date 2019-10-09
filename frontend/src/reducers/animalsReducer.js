@@ -3,7 +3,8 @@ import {
   FETCH_ANIMALS_SUCCESS,
   FETCH_ANIMALS_ERROR,
   SET_VALUE,
-  RESET_VALUES
+  RESET_VALUES,
+  RESET_PAGINATION
 } from '../actions/types'
 
 const initialState = {
@@ -28,6 +29,15 @@ export default (state = initialState, action) => {
       return {
         ...state,
         values: { ...initialState.values }
+      }
+
+    case RESET_PAGINATION:
+      return {
+        ...state,
+        values: {
+          ...state.values,
+          page: 1
+        }
       }
 
     case SET_VALUE:

@@ -19,6 +19,7 @@ export const FETCH_ANIMALS_ERROR = 'FETCH_ANIMALS_ERROR'
 // sets value of form elements
 export const SET_VALUE = 'SET_VALUE'
 export const RESET_VALUES = 'RESET_VALUES'
+export const RESET_PAGINATION = 'RESET_PAGINATION'
 
 // fetches single animal by id
 export const FETCH_ANIMAL_BEGIN = 'FETCH_ANIMAL_BEGIN'

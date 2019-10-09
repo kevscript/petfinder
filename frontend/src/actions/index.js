@@ -15,10 +15,15 @@ import {
   FETCH_ANIMAL_BEGIN,
   FETCH_ANIMAL_SUCCESS,
   FETCH_ANIMAL_ERROR,
+  RESET_PAGINATION
 } from './types'
 
 export const resetValues = () => ({
   type: RESET_VALUES
+})
+
+export const resetPagination = () => ({
+  type: RESET_PAGINATION
 })
 
 // SET VALUES
