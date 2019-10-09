@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { setSelectedType, fetchBreeds, fetchAnimals, setValue, resetValues } from '../actions'
+import { setSelectedType, fetchBreeds, fetchAnimals, setValue, resetValues, resetPagination } from '../actions'
 import { PulseLoader } from 'react-spinners'
 import styled from 'styled-components'
 
@@ -20,7 +20,7 @@ const LoaderContainer = styled.div`
   padding: 200px 0;
 `
 
-const MainPage = ({ content, animals, setSelectedType, fetchBreeds, fetchAnimals, setValue, resetValues }) => {
+const MainPage = ({ content, animals, setSelectedType, fetchBreeds, fetchAnimals, setValue, resetValues, resetPagination }) => {
 
   const [openForm, setOpenForm] = useState(false)
   const { data, pagination, values, loading } = animals
@@ -37,9 +37,10 @@ const MainPage = ({ content, animals, setSelectedType, fetchBreeds, fetchAnimals
     fetchBreeds(type)
   }
 
-  const handleSubmit = (e) => {
+  const handleNewSearch = (e) => {
     e.preventDefault()
     setOpenForm(false)
+    resetPagination()
     fetchAnimals()
   }
 
@@ -62,7 +63,7 @@ const MainPage = ({ content, animals, setSelectedType, fetchBreeds, fetchAnimals
       <Header 
         handleTypeSelection={handleTypeSelection} 
         content={content}
-        handleSubmit={handleSubmit}
+        handleNewSearch={handleNewSearch}
         handleValuesSelect={handleValueChange}
         values={values}
         handleOpenForm={handleOpenForm}
@@ -101,7 +102,8 @@ const mapDispatchToProps = {
   fetchBreeds,
   fetchAnimals,
   setValue,
-  resetValues
+  resetValues,
+  resetPagination
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage)

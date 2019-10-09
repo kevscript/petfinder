@@ -26,7 +26,7 @@ const BottomContainer = styled.div`
 const Header = ({ 
   handleTypeSelection, 
   content, 
-  handleSubmit, 
+  handleNewSearch, 
   handleValuesSelect, 
   values,
   handleOpenForm,
@@ -43,7 +43,7 @@ const Header = ({
               <option key={x.name} value={x.name}>{x.name}</option>
             ))}
           </select>
-          <button onClick={handleSubmit}>Search</button>
+          <button onClick={handleNewSearch}>Search</button>
         </div>
         <button onClick={handleOpenForm}>{openForm ? 'Less Options' : 'More Options'}</button>
       </TopContainer>
